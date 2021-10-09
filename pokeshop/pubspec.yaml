@@ -26,6 +26,7 @@ dependencies:
   dio:
   flutter_mobx:
   mobx_codegen:
+  build_runner:
 
 
   # The following adds the Cupertino Icons font to your application.
