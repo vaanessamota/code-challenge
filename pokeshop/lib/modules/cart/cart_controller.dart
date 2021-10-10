@@ -18,4 +18,9 @@ abstract class _CartBase with Store {
   removePokemonFromList(Pokemon pokemon) async {
     cart_list.remove(pokemon);
   }
+
+  @action
+  confirmPurchase() {
+    cart_list.clear();
+  }
 }

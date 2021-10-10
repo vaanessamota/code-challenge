@@ -33,6 +33,28 @@ mixin _$CartController on _CartBase, Store {
         .run(() => super.addPokemonToList(pokemon));
   }
 
+  final _$removePokemonFromListAsyncAction =
+      AsyncAction('_CartBase.removePokemonFromList');
+
+  @override
+  Future removePokemonFromList(Pokemon pokemon) {
+    return _$removePokemonFromListAsyncAction
+        .run(() => super.removePokemonFromList(pokemon));
+  }
+
+  final _$_CartBaseActionController = ActionController(name: '_CartBase');
+
+  @override
+  dynamic confirmPurchase() {
+    final _$actionInfo = _$_CartBaseActionController.startAction(
+        name: '_CartBase.confirmPurchase');
+    try {
+      return super.confirmPurchase();
+    } finally {
+      _$_CartBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

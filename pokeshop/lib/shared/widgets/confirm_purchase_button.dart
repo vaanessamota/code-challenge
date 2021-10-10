@@ -13,6 +13,7 @@ class ConfirmPurchaseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: () {
+          cartController.confirmPurchase();
           showDialog<String>(
             context: context,
             builder: (BuildContext context) => AlertDialog(
