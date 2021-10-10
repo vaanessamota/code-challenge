@@ -16,7 +16,6 @@ abstract class _HomeBase with Store {
   getPokemons() async {
     try {
       pokemons = await repository.fetchPokemons();
-      pokemons.map((element) => element.name.toUpperCase());
     } catch (exception) {
       throw Exception('Could not get Pokemons');
     }
