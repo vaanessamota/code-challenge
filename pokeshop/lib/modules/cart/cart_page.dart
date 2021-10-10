@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pokeshop/modules/cart/cart_controller.dart';
+import 'package:pokeshop/shared/widgets/confirm_purchase_button.dart';
 import 'package:pokeshop/shared/widgets/pokemon_card_widget.dart';
 
 class MyCartPage extends StatelessWidget {
@@ -55,6 +56,11 @@ class MyCartPage extends StatelessWidget {
                             },
                           ),
                         ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 32),
+                          child: ConfirmPurchaseButton(
+                              cartController: cartController),
+                        )
                       ],
                     ),
                   ),
