@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:pokeshop/modules/cart/cart_controller.dart';
+import 'package:pokeshop/shared/models/pokemon_model.dart';
 
 class PokemonCard extends StatelessWidget {
-  const PokemonCard({
-    Key? key,
-    required String this.image,
-    required String this.name,
-    required String this.weight,
-  }) : super(key: key);
+  final Pokemon pokemon;
+  final CartController cartController;
+  final bool isHome;
 
-  final String image;
-  final String name;
-  final String weight;
+  PokemonCard(
+      {Key? key,
+      required Pokemon this.pokemon,
+      required CartController this.cartController,
+      required bool this.isHome})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +22,16 @@ class PokemonCard extends StatelessWidget {
           children: [
             Container(
               height: 140,
-              child: Image.network(image),
+              child: Image.network(pokemon.sprite.image),
             ),
             Container(
                 child: Text(
-              'Name: $name',
+              'Name: ${pokemon.name}',
               style: TextStyle(fontWeight: FontWeight.bold),
             )),
             Container(
               child: Text(
-                weight,
+                'Weight: ${pokemon.weight}',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
@@ -37,17 +39,25 @@ class PokemonCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (isHome) {
+                        cartController.addPokemonToList(pokemon);
+                      } else {
+                        cartController.removePokemonFromList(pokemon);
+                      }
+                    },
                     child: Text(
-                      'Add to cart',
+                      isHome ? 'Add to cart' : 'Remove',
                       style: TextStyle(
                           color: Theme.of(context).primaryColor, fontSize: 18),
                     )),
-                Icon(
-                  Icons.favorite_border_sharp,
-                  size: 25,
-                  color: Theme.of(context).primaryColor,
-                )
+                isHome
+                    ? Icon(
+                        Icons.favorite_border_sharp,
+                        size: 25,
+                        color: Theme.of(context).primaryColor,
+                      )
+                    : Container(),
               ],
             )
           ],

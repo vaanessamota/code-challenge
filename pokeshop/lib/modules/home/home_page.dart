@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:pokeshop/shared/widgets/navbar_widget.dart';
+import 'package:pokeshop/modules/cart/cart_controller.dart';
 import 'package:pokeshop/shared/widgets/pokemon_card_widget.dart';
 import 'home_controller.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  final CartController cartController;
+
+  MyHomePage({
+    Key? key,
+    required this.title,
+    required CartController this.cartController,
+  }) : super(key: key);
 
   final String title;
 
@@ -14,6 +20,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   HomeController _controller = HomeController();
+
+  late Future _getPokemons;
+
+  @override
+  void initState() {
+    super.initState();
+    _getPokemons = _controller.getPokemons();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
           SizedBox(
             height: screenSize.height - 116,
             child: FutureBuilder(
-                future: _controller.getPokemons(),
+                future: _getPokemons,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return Column(
@@ -47,12 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
                               return Container(
                                 height: 500,
                                 child: PokemonCard(
-                                  image:
-                                      _controller.pokemons[index].sprite.image,
-                                  name: _controller.pokemons[index].name,
-                                  weight:
-                                      "Weight: ${_controller.pokemons[index].weight}",
-                                ),
+                                    isHome: true,
+                                    cartController: widget.cartController,
+                                    pokemon: _controller.pokemons[index]),
                               );
                             },
                           ),
@@ -76,7 +87,6 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      bottomNavigationBar: NavBar(),
     );
   }
 }
