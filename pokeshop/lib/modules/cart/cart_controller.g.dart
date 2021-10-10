@@ -24,6 +24,21 @@ mixin _$CartController on _CartBase, Store {
     });
   }
 
+  final _$indexLikedPokemonsAtom = Atom(name: '_CartBase.indexLikedPokemons');
+
+  @override
+  ObservableList<int?> get indexLikedPokemons {
+    _$indexLikedPokemonsAtom.reportRead();
+    return super.indexLikedPokemons;
+  }
+
+  @override
+  set indexLikedPokemons(ObservableList<int?> value) {
+    _$indexLikedPokemonsAtom.reportWrite(value, super.indexLikedPokemons, () {
+      super.indexLikedPokemons = value;
+    });
+  }
+
   final _$addPokemonToListAsyncAction =
       AsyncAction('_CartBase.addPokemonToList');
 
@@ -56,9 +71,21 @@ mixin _$CartController on _CartBase, Store {
   }
 
   @override
+  dynamic likePokemon(int? index) {
+    final _$actionInfo =
+        _$_CartBaseActionController.startAction(name: '_CartBase.likePokemon');
+    try {
+      return super.likePokemon(index);
+    } finally {
+      _$_CartBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-cart_list: ${cart_list}
+cart_list: ${cart_list},
+indexLikedPokemons: ${indexLikedPokemons}
     ''';
   }
 }

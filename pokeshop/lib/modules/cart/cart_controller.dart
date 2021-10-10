@@ -23,4 +23,16 @@ abstract class _CartBase with Store {
   confirmPurchase() {
     cart_list.clear();
   }
+
+  @observable
+  ObservableList<int?> indexLikedPokemons = ObservableList<int?>.of([]);
+
+  @action
+  likePokemon(int? index) {
+    if (indexLikedPokemons.contains(index)) {
+      indexLikedPokemons.remove(index);
+    } else {
+      indexLikedPokemons.add(index);
+    }
+  }
 }

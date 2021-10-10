@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pokeshop/modules/cart/cart_controller.dart';
 import 'package:pokeshop/shared/models/pokemon_model.dart';
 
@@ -6,12 +7,14 @@ class PokemonCard extends StatelessWidget {
   final Pokemon pokemon;
   final CartController cartController;
   final bool isHome;
+  final int? index;
 
   PokemonCard(
       {Key? key,
       required Pokemon this.pokemon,
       required CartController this.cartController,
-      required bool this.isHome})
+      required bool this.isHome,
+      this.index})
       : super(key: key);
 
   @override
@@ -52,11 +55,21 @@ class PokemonCard extends StatelessWidget {
                           color: Theme.of(context).primaryColor, fontSize: 18),
                     )),
                 isHome
-                    ? Icon(
-                        Icons.favorite_border_sharp,
-                        size: 25,
-                        color: Theme.of(context).primaryColor,
-                      )
+                    ? Observer(
+                        builder: (_) => IconButton(
+                              icon: Icon(
+                                cartController.indexLikedPokemons
+                                        .contains(index)
+                                    ? Icons.favorite
+                                    : Icons.favorite_border_sharp,
+                                size: 25,
+                              ),
+                              padding: EdgeInsets.only(right: 15),
+                              color: Theme.of(context).primaryColor,
+                              onPressed: () {
+                                cartController.likePokemon(index);
+                              },
+                            ))
                     : Container(),
               ],
             )

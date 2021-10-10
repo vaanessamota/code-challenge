@@ -61,9 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
                               return Container(
                                 height: 500,
                                 child: PokemonCard(
-                                    isHome: true,
-                                    cartController: widget.cartController,
-                                    pokemon: _controller.pokemons[index]),
+                                  isHome: true,
+                                  cartController: widget.cartController,
+                                  pokemon: _controller.pokemons[index],
+                                  index: index,
+                                ),
                               );
                             },
                           ),
