@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pokeshop/modules/cart/cart_controller.dart';
 import 'package:pokeshop/shared/models/pokemon_model.dart';
+import 'package:pokeshop/shared/widgets/card_text_button.dart';
 
 class PokemonCard extends StatelessWidget {
   final Pokemon pokemon;
@@ -41,19 +42,10 @@ class PokemonCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextButton(
-                    onPressed: () {
-                      if (isHome) {
-                        cartController.addPokemonToList(pokemon);
-                      } else {
-                        cartController.removePokemonFromList(pokemon);
-                      }
-                    },
-                    child: Text(
-                      isHome ? 'Add to cart' : 'Remove',
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor, fontSize: 18),
-                    )),
+                CardTextButton(
+                    isHome: isHome,
+                    cartController: cartController,
+                    pokemon: pokemon),
                 isHome
                     ? Observer(
                         builder: (_) => IconButton(
